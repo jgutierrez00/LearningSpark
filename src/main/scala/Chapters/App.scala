@@ -3,8 +3,8 @@ package Chapters
 import Chapters.Chapter1.MnMcount
 import Chapters.Chapter2.AuthorsAges
 import Chapters.Chapter3.{Schemas, Schemas2}
-import Chapters.Chapter4.{Avro, BasicQueries, Binaries, Images, ORC, Parquet, JSON, CSV, Tables, Views, MetaData, DataReader, DataWriter}
-import Chapters.Chapter5.{PostgreSQL, UDFs}
+import Chapters.Chapter4.{Avro, BasicQueries, Binaries, CSV, DataReader, DataWriter, Images, JSON, MetaData, ORC, Parquet, Tables, Views}
+import Chapters.Chapter5.{AzureCosmos, MSSQL, MySQL, PostgreSQL, UDFs}
 import org.apache.spark.sql.SparkSession
 
 
@@ -66,11 +66,17 @@ object App {
           UDFs.run(spark)
         case "Chapter5.PostgreSQL" =>
           PostgreSQL.run(spark, chapterArgs)
+        case "Chapter5.MySQL" =>
+          MySQL.run(spark, chapterArgs)
+        case "Chapter5.AzureCosmos" =>
+          AzureCosmos.run(spark, chapterArgs)
+        case "Chapter5.MSSQL" =>
+          MSSQL.run(spark, chapterArgs)
       }
     }catch{
       case ex: ClassNotFoundException =>
         println(s"Error: La clase ${className} no existe en el paquete Chapters")
-        println(ex.getMessage())
+        println(ex.printStackTrace())
 
       case unknowErr: Exception =>
         println(s"Error al ejecutar el job: ${unknowErr.getMessage}")
