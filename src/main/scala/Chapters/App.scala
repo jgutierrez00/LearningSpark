@@ -1,10 +1,5 @@
 package Chapters
 
-import Chapters.Chapter1.MnMcount
-import Chapters.Chapter2.AuthorsAges
-import Chapters.Chapter3.{Schemas, Schemas2}
-import Chapters.Chapter4.{Avro, BasicQueries, Binaries, CSV, DataReader, DataWriter, Images, JSON, MetaData, ORC, Parquet, Tables, Views}
-import Chapters.Chapter5.{AzureCosmos, MSSQL, MySQL, PostgreSQL, UDFs}
 import org.apache.spark.sql.SparkSession
 
 object App {
