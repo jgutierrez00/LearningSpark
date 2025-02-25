@@ -2,11 +2,11 @@ package Chapters.Chapter6
 
 case class Bloggers
 (
-  id: Int,
+  id: BigInt,
   first: String,
   last: String,
   url: String,
-  date: String,
-  hits: Int,
+  published: String,
+  hits: BigInt,
   campaigns: Array[String]
 )
