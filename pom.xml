@@ -45,6 +45,11 @@
             <artifactId>mssql-jdbc</artifactId>
             <version>12.6.3.jre11</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-hive_2.13</artifactId>
+            <version>3.5.3</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
