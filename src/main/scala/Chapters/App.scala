@@ -12,14 +12,22 @@ object App {
     }
     val className = args(0)
     val chapterArgs = args.drop(1)
-
-    val spark: SparkSession = SparkSession.builder()
-      .appName("LearningSpark")
-      .master("local[*]")
-      .getOrCreate()
+    var spark: SparkSession = null
 
     try{
-
+      if(className.equals("Chapter7.Optimization")){
+        spark = SparkSession.builder()
+          .appName("LearningSpark")
+          .config("spark.sql.shuffle.partitions", "5")
+          .config("spark.executor.memory", "2g")
+          .master("local[*]")
+          .getOrCreate()
+      }else{
+        spark = SparkSession.builder()
+          .appName("LearningSpark")
+          .master("local[*]")
+          .getOrCreate()
+      }
       val clazz = Class.forName("Chapters."+className + "$")
       val module = clazz.getField("MODULE$").get(null)
       val runMethod = clazz.getMethod("run", classOf[SparkSession], classOf[Array[String]])
