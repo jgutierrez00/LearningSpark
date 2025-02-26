@@ -14,7 +14,8 @@ object StreamingQuery extends Chapter{
       .option("port", 9999)
       .load()
 
-    val words = lines.select(split(col("value"), "\\s").as("word"))
+    val filteredLines = lines.filter("isCorruptedUdf(value) = false")
+    val words = filteredLines.select(split(col("value"), "\\s").as("word"))
     val counts = words.groupBy("word").count()
 
     val streamingQuery = counts.writeStream
