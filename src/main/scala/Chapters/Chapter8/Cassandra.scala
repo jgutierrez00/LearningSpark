@@ -11,19 +11,15 @@ import org.apache.spark.sql.functions.current_timestamp
 
 object Cassandra extends Chapter{
 
+  var hostAddr: String = _
+  var keyspaceName: String = _
+  var tableName: String = _
+
   override def run(spark: SparkSession, args: Array[String]): Unit = {
 
-    val hostAddr = args(0)
-    val keyspaceName = args(1)
-    val tableName = args(2)
-
-    def writeCountsToCassandra(updatedCountsDF: DataFrame, batchId: Long): Unit = {
-      updatedCountsDF.write
-        .format("org.apache.spark.sql.cassandra")
-        .options(Map("table" -> tableName, "keyspace" -> keyspaceName))
-        .mode("append")
-        .save()
-    }
+    hostAddr = args(0)
+    keyspaceName = args(1)
+    tableName = args(2)
 
     spark.conf.set("spark.cassandra.connection.host", hostAddr)
     spark.conf.set("spark.cassandra.output.consistency.level", "LOCAL_QUORUM")
@@ -57,5 +53,39 @@ object Cassandra extends Chapter{
 
       streamingQuery.awaitTermination()
 
+  }
+
+  // Otra forma si foreachBatch no funciona o no se puede usar
+
+  def open(spark: SparkSession, partitionId: Long, epochId: Long): Boolean = {
+    val streamingDF = spark.readStream
+      .format("csv")
+      .schema("userid STRING, item_count INT, last_update_timestamp TIMESTAMP")
+      .load("/tmp/data")
+
+    return true
+  }
+
+  def process(spark: SparkSession, record: String, streamedDataFrame: DataFrame): Unit = {
+    val streamingQuery = streamedDataFrame
+      .writeStream
+      .foreachBatch(writeCountsToCassandra _)
+      .outputMode("append")
+      .option("checkpointLocation", "/tmp/checkpoint")
+      .start()
+
+    streamingQuery.awaitTermination()
+  }
+
+  def close(errorOrNull: Throwable) = {
+
+  }
+
+  def writeCountsToCassandra(updatedCountsDF: DataFrame, batchId: Long): Unit = {
+    updatedCountsDF.write
+      .format("org.apache.spark.sql.cassandra")
+      .options(Map("table" -> tableName, "keyspace" -> keyspaceName))
+      .mode("append")
+      .save()
   }
 }
