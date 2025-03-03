@@ -26,9 +26,10 @@ object Windowing extends Chapter{
     Usando una particion, obtendriamos esos resultados pero solo para cada particion, por ejemplo si usamos como particion
     la columna "empresa", el rank, dense_rank y row_number se harian en sobre cada subgrupo de empresas.
 
-    Si usamos "name" entonces nos sale todo los resultados a 1 ya que no hay nombres iguales.
+    Si usamos "name" entonces nos sale todo los resultados a 1 ya que no hay nombres iguales por tanto hay un subgrupo
+    por cada nombre.
      */
-    val windowSpec = Window.orderBy(desc("power"))
+    val windowSpec = Window.partitionBy("name").orderBy(desc("power"))
 
     var modifiedDS = dataDS.withColumn("Rank", rank().over(windowSpec))
     modifiedDS = modifiedDS.withColumn("Dense Rank", dense_rank().over(windowSpec))
