@@ -29,7 +29,7 @@ object Windowing extends Chapter{
     Si usamos "name" entonces nos sale todo los resultados a 1 ya que no hay nombres iguales por tanto hay un subgrupo
     por cada nombre.
      */
-    val windowSpec = Window.partitionBy("name").orderBy(desc("power"))
+    val windowSpec = Window.orderBy(desc("power"))
 
     var modifiedDS = dataDS.withColumn("Rank", rank().over(windowSpec))
     modifiedDS = modifiedDS.withColumn("Dense Rank", dense_rank().over(windowSpec))
