@@ -55,6 +55,11 @@
             <artifactId>azure-cosmos-spark_3-1_2-12</artifactId>
             <version>4.37.0</version>
         </dependency>
+        <dependency>
+            <groupId>io.delta</groupId>
+            <artifactId>delta-core_2.12</artifactId>
+            <version>0.7.0</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

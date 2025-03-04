@@ -15,11 +15,18 @@ object App {
     var spark: SparkSession = null
 
     try{
-      if(className.equals("Chapter7.Optimization")){
+      if(className.equals("Chapter7.Optimization")) {
         spark = SparkSession.builder()
           .appName("LearningSpark")
           .config("spark.sql.shuffle.partitions", "5")
           .config("spark.executor.memory", "2g")
+          .master("local[*]")
+          .getOrCreate()
+      }else if(className.equals("Chapter9.DeltaLake")){
+        spark = SparkSession.builder()
+          .appName("LearningSpark")
+          .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
+          .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
           .master("local[*]")
           .getOrCreate()
       }else{
