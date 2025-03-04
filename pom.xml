@@ -13,6 +13,13 @@
         <scala.version>${scala.version.major}.${scala.version.minor}</scala.version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>confluent</id>
+            <url>https://packages.confluent.io/maven/</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.spark</groupId>
@@ -64,6 +71,46 @@
             <groupId>io.delta</groupId>
             <artifactId>delta-core_2.12</artifactId>
             <version>0.7.0</version>
+        </dependency>
+        <!-- Cliente Kafka -->
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>3.6.0</version>
+        </dependency>
+
+        <!-- Kafka Streams para Scala -->
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-streams-scala_2.12</artifactId>
+            <version>3.6.0</version>
+        </dependency>
+
+        <!-- Conector Kafka con ZooKeeper -->
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka_2.12</artifactId>
+            <version>3.7.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-sql-kafka-0-10_2.12</artifactId>
+            <version>3.5.4</version>
+        </dependency>
+
+        <!-- Librería de serialización JSON para Kafka -->
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-json-serializer</artifactId>
+            <version>7.7.2</version>
+        </dependency>
+
+        <!-- SLF4J para logs -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>2.0.9</version>
         </dependency>
     </dependencies>
     <build>
