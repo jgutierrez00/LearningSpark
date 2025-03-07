@@ -33,6 +33,8 @@ object App {
         spark = SparkSession.builder()
           .appName("LearningSpark")
           .master("local[*]")
+          .config("spark.executor.memory", "4g")
+          .config("spark.driver.memory", "4g")
           .getOrCreate()
       }
       val clazz = Class.forName("Chapters."+className + "$")

@@ -25,8 +25,6 @@ object StreamingExercise extends Chapter{
       .schema(schema)
       .option("header", "true")
       .option("delimiter", ";")
-      .option("ignoreLeadingWhiteSpace", "true")
-      .option("ignoreTrailingWhiteSpace", "true")
       .option("maxFilesPerTrigger", "1")
       .load(args(0))
 
@@ -45,17 +43,17 @@ object StreamingExercise extends Chapter{
       .trigger(Trigger.ProcessingTime("30 seconds"))
       .start()
 
-    val queryDelta = transformedDataDF.writeStream
-      .outputMode("complete")
-      .format("delta")
-      .option("checkpointLocation", "/tmp/checkpoint")
-      .trigger(Trigger.ProcessingTime("30 seconds"))
-      .start(args(1))
+//    val queryDelta = transformedDataDF.writeStream
+//      .outputMode("complete")
+//      .format("delta")
+//      .option("checkpointLocation", "/tmp/checkpoint")
+//      .trigger(Trigger.ProcessingTime("30 seconds"))
+//      .start(args(1))
 
     // Await terminations
 
     queryConsole.awaitTermination()
-    queryDelta.awaitTermination()
+//    queryDelta.awaitTermination()
 
   }
 }
