@@ -12,6 +12,7 @@ object SampleData extends Chapter{
 
     val r = new Random(42)
 
+    // Create a Dataset of Usage objects
     val data = for (i <- 0 to 1000)
       yield (Usage(i, "user-" + r.alphanumeric.take(5).mkString(""), r.nextInt(1000)))
 

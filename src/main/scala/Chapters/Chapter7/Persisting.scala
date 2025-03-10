@@ -9,6 +9,7 @@ object Persisting extends Chapter{
 
     import spark.implicits._
 
+    // Contamos el tiempo del primer acceso y lo comparamos con el segundo acceso.
     val df = spark.range(1 * 10000000).toDF("id").withColumn("square", $"id" * $"id")
     df.persist(StorageLevel.DISK_ONLY)
 

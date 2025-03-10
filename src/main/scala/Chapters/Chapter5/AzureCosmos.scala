@@ -10,6 +10,8 @@ object AzureCosmos extends Chapter{
   override def run(spark: SparkSession, args: Array[String]): Unit = {
 
     val query = "SELECT c.colA, c.coln FROM c WHERE c.origin = 'SEA'"
+
+    // Configuramos la conexión a Cosmos DB
     val readConfig = Config(Map(
       "Endpoint" -> "https://[ACCOUNT].documents.azure.com:443/",
       "Masterkey" -> "[MASTER KEY]",
@@ -23,6 +25,7 @@ object AzureCosmos extends Chapter{
     val df = spark.read.cosmosDB(readConfig)
     df.count()
 
+    // Configuramos la conexión a Cosmos DB de escritura
     val writeConfig = Config(Map(
       "Endpoint" -> "https://[ACCOUNT].documents.azure.com:443/",
       "Masterkey" -> "[MASTER KEY]",

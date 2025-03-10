@@ -7,6 +7,8 @@ import org.apache.spark.sql.types._
 object Schemas2 extends Chapter{
   override def run(spark: SparkSession, args: Array[String]): Unit = {
 
+
+    // Definimos un esquema y creamos un DataFrame con él
     val schema = StructType(Array(StructField("Id", IntegerType, false),
       StructField("First", StringType, false),
       StructField("Last", StringType, false),

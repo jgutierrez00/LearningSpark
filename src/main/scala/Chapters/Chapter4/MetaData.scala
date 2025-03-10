@@ -19,6 +19,7 @@ object MetaData extends Chapter{
       .csv(csv_file)
     flights_df.write.saveAsTable("us_delay_flights_tbl")
 
+    // Mostramos la metadata
     spark.catalog.listDatabases().show()
     spark.catalog.listTables().show()
     spark.catalog.listColumns("us_delay_flights_tbl").show()

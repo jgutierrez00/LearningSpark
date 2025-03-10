@@ -8,6 +8,8 @@ object Schemas extends Chapter{
 
     override def run(spark: SparkSession, args: Array[String]): Unit = {
 
+
+        // Leemos un archivo csv y lo guardamos en un dataframe
         val fireDF = spark
                 .read
                 .option("samplingRatio", 0.001)
@@ -30,6 +32,9 @@ object Schemas extends Chapter{
 
         fewFireDF.show(5, false)
 
+
+        // Seleccionamos la columna CallType que no sea null y contamos los valores distintos de la misma
+        // agg() se añade cuando tenemos un alias
         fireDF
             .select("CallType")
             .where(col("CallType").isNotNull)
@@ -42,13 +47,18 @@ object Schemas extends Chapter{
             .distinct
             .show(10, false)
 
+
+        // Renombramos la columna Delay a ResponseDelayedMins
         val newFireDF = fireDF.withColumnRenamed("Delay", "ResponseDelayedMins")
 
+        // Mostramos los valores de la columna ResponseDelayedMins que sean mayores a 5
         newFireDF
             .select("ResponseDelayedMins")
             .where(col("ResponseDelayedMins") > 5)
             .show(5, false)
 
+        // Añadimos las columnas IncidentDate, OnWatchDate y AvailableDtTS usando las columnas
+        // CallDate, WatchDate y AvailableDtTm respectivamente pero cambiado a tipo timestamp
         val fireTsDF = newFireDF
             .withColumn("IncidentDate", to_timestamp(col("CallDate"), "MM/dd/yyyy"))
             .drop("CallDate")
@@ -67,6 +77,7 @@ object Schemas extends Chapter{
             .orderBy(year(col("IncidentDate")))
             .show()
 
+        // Mostramos los valores de la columna CallType que no sean null y los agrupamos por CallType
         fireTsDF
             .select("CallType")
             .where(col("CallType").isNotNull)

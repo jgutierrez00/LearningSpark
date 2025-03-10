@@ -52,6 +52,8 @@ object Modifications extends Chapter{
     )
     foo5.show()
 
+    // Seleccionamos unas columnas, las filtramos y le hacemos un pivote a la columna month. Con esto transformamos sus
+    // valores en columnas y hacemos un groupBy por destination. Finalmente, agregamos las columnas AvgDelay y MaxDelay
     val pivotDF = delays
       .select(
         col("destination"),

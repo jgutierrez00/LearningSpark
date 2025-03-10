@@ -10,6 +10,7 @@ object Caching extends Chapter{
 
     import spark.implicits._
 
+    // Contamos el tiempo del primer acceso y lo comparamos con el segundo acceso.
     var startTime = System.nanoTime()
     val df = spark.range(1 * 10000000).toDF("id").withColumn("square", $"id" * $"id" )
     df.cache()

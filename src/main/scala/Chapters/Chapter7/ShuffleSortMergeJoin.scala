@@ -12,6 +12,7 @@ object ShuffleSortMergeJoin extends Chapters.Chapter {
 
     import spark.implicits._
 
+    // Quitamos el broadcastjoin
     spark.conf.set("spark.sql.autoBroadcastJoinThreshold", -1)
 
     var states = scala.collection.mutable.Map[Int, String]()

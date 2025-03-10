@@ -8,6 +8,7 @@ object DataWriter extends Chapter{
 
     val location = args(0)
 
+    // Creamos un DataFrame y lo guardamos en formato JSON
     val dataDF = spark.createDataFrame(Seq(("Brooke", 20), ("Brooke", 25), ("Denny", 31),
       ("Jules", 30), ("TD", 35))).toDF("name", "age")
 

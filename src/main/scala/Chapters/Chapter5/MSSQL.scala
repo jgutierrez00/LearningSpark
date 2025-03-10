@@ -13,8 +13,10 @@ import java.util.Properties
 object MSSQL extends Chapter{
   override def run(spark: SparkSession, args: Array[String]): Unit = {
 
+    // Creamos el string de conexion
     val jdbcUrl = s"jdbc:sqlserver://${args(0)}\\SQLEXPRESS:1433;database=${args(1)};encrypt=false;trustServerCertificate=false;integratedSecurity=true;"
 
+    // Nos conectamos a la base de datos
     val jdbcDF = spark.read.format("jdbc")
       .option("url", jdbcUrl)
       .option("dbtable", args(2))

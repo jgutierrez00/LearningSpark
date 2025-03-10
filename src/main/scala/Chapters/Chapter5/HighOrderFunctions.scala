@@ -4,9 +4,13 @@ import Chapters.Chapter
 import org.apache.spark.sql._
 import org.apache.spark.sql.types._
 import org.apache.spark.sql.functions._
+import org.apache.spark.sql.expressions.UserDefinedFunction
+import org.apache.spark.sql.functions.udf
 
 object HighOrderFunctions extends Chapter{
   override def run(spark: SparkSession, args: Array[String]): Unit = {
+
+    val reduceUDF: UserDefinedFunction = udf((arr: Seq[Int]) => arr.sum / arr.size)
 
     val t1 = Array(35, 36, 32, 30, 40, 42, 38)
     val t2 = Array(31, 32, 34, 55, 56)
@@ -41,12 +45,17 @@ object HighOrderFunctions extends Chapter{
           |FROM tempDF""".stripMargin)
       .show()
 
-    // funcion reduce no funciona
+    // funcion reduce
 
-//    spark.sql(
-//        """SELECT celsius, reduce(celsius, 0, (t, acc) -> t + acc, acc -> (acc div size(celsius))) as avgTemp
-//          |FROM tempDF""".stripMargin)
-//      .show()
+    spark.sql(
+        """SELECT celsius,
+          |reduce (
+          |celsius, 0,
+          |(t, acc) -> t + acc,
+          |acc -> (acc div size(celsius) * 9 div 5) + 32
+          |) as avgFahrenheit
+          |FROM tempDF""".stripMargin)
+      .show()
 
 
   }

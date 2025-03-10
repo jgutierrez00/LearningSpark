@@ -11,6 +11,7 @@ object DataReader extends Chapter{
     val fileCsv = args(1)
     val fileJson = args(2)
 
+    // Cargamos los archivos en un DataFrame de diferentes formas
     val df = spark.read.format("parquet").load(fileParquet)
 
     val df2 = spark.read.load(fileParquet)

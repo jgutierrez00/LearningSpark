@@ -9,11 +9,13 @@ object BasicQueries extends Chapter{
 
     val csvFile = args(0)
 
+    // Cargamos el CSV en un DataFrame
     val df = spark.read.format("csv")
       .option("inferSchema", "true")
       .option("header", "true")
       .load(csvFile)
 
+    // Creamos una vista temporal para poder hacer queries
     df.createOrReplaceTempView("us_delay_flights_tbl")
 
     spark.sql(

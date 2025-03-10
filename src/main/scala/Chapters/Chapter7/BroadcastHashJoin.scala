@@ -12,6 +12,8 @@ object BroadcastHashJoin extends Chapter{
 
     val joinExpr = person.col("country") === country.col("name")
 
+
+    // Realizamos un broadcastjoin
     val joinType = "inner"
 
     val joinResult = person.join(broadcast(country), joinExpr, joinType)

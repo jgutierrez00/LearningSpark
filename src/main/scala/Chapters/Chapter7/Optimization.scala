@@ -9,6 +9,7 @@ object Optimization extends Chapters.Chapter {
 
     printConfigs(spark)
 
+    // Configuramos el número de particiones para el shuffle
     spark.conf.set("spark.sql.shuffle.partitions", spark.sparkContext.defaultParallelism)
     println(" ****** Setting Shuffle Partitions to Default Parallelism")
     printConfigs(spark)
