@@ -6,8 +6,8 @@ import org.apache.spark.sql.SparkSession
 object Tables extends Chapter {
   override def run(spark: SparkSession, args: Array[String]): Unit = {
 
-    spark.sql("CREATE DATABASE learn_spark_db")
-    spark.sql("USE learn_spark_db")
+  spark.sql("CREATE DATABASE learn_spark_db")
+  spark.sql("USE learn_spark_db")
 
 //    spark.sql(
 //      """CREATE TABLE manage_us_delay_flights_tbl (
@@ -18,19 +18,19 @@ object Tables extends Chapter {
 //        |destination STRING)
 //        |""".stripMargin)
 
-    // Directo usando el esquema y el csv
+  // Directo usando el esquema y el csv
 
-    val csv_file = args(0)
+  val csv_file = args(0)
 
-    val schema = "date STRING, delay INT, distance INT, origin STRING, destination STRING"
+  val schema = "date STRING, delay INT, distance INT, origin STRING, destination STRING"
 
-    val flights_df = spark.read
-      .option("header", true)
-      .option("schema", schema)
-      .csv(csv_file)
-    flights_df.write.saveAsTable("managed_us_delay_flights_tbl")
+  val flights_df = spark.read
+    .option("header", true)
+    .option("schema", schema)
+    .csv(csv_file)
+  flights_df.write.saveAsTable("managed_us_delay_flights_tbl")
 
-    // Unmanaged table
+  // Unmanaged table
 
 //    spark.sql(
 //      s"""CREATE TABLE us_delay_flights_tbl (
@@ -43,7 +43,7 @@ object Tables extends Chapter {
 //        |PATH '${args(0)}')
 //        |""".stripMargin)
 
-    // Con la API de DataFrame
+  // Con la API de DataFrame
 
 //    flights_df.write
 //      .options("path", "/tmp/data/us_flights_delay")
