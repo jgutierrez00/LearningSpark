@@ -7,9 +7,13 @@ import org.apache.spark.sql.functions.broadcast
 object BroadcastHashJoin extends Chapter{
   override def run(spark: SparkSession, args: Array[String]): Unit = {
 
-    val person = spark.read.json(args(0)).drop("_corrupt_record")
-    val country = spark.read.json(args(1)).drop("_corrupt_record")
+    val person = spark.read.json(args(0))
+    val country = spark.read.json(args(1))
 
+    if (person.isEmpty || country.isEmpty) {
+      println("One of the dataframes is empty. Exiting.")
+      return
+    }
     val joinExpr = person.col("country") === country.col("name")
 
 
