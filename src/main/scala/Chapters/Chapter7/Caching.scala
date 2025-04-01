@@ -6,6 +6,9 @@ import org.apache.spark.sql.functions._
 
 object Caching extends Chapter{
 
+  var firstTime: Double = 0
+  var secondTime: Double = 0
+
   override def run(spark: SparkSession, args: Array[String]): Unit = {
 
     import spark.implicits._
@@ -15,11 +18,13 @@ object Caching extends Chapter{
     df.cache()
     df.count()
     var endtime = System.nanoTime()
-    println(s"First access: ${(endtime - startTime).toDouble / 100000000} miliseconds")
+    firstTime = (endtime - startTime).toDouble / 100000000
+    println(s"First access: ${firstTime} miliseconds")
     startTime = System.nanoTime()
     df.count()
     endtime = System.nanoTime()
-    println(s"Second access: ${(endtime - startTime).toDouble / 100000000} miliseconds")
+    secondTime = (endtime - startTime).toDouble / 100000000
+    println(s"Second access: ${secondTime} miliseconds")
 
   }
 }
