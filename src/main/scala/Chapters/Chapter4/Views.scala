@@ -6,7 +6,7 @@ import org.apache.spark.sql.SparkSession
 object Views extends Chapter {
     override def run(spark: SparkSession, args: Array[String]): Unit = {
 
-    spark.sql("CREATE DATABASE learn_spark_db")
+    spark.sql("CREATE DATABASE IF NOT EXISTS learn_spark_db")
     spark.sql("USE learn_spark_db")
 
     val csv_file = args(0)
@@ -34,11 +34,12 @@ object Views extends Chapter {
     df_sfo.createOrReplaceGlobalTempView("us_origin_airport_SFO_global_tmp_view")
     df_jfk.createOrReplaceTempView("us_origin_airport_JFK_tmp_view")
 
-    spark.read.table("us_origin_airport_JFK_tmp_view").show(10)
-    spark.read.table("us_origin_airport_SFO_global_tmp_view").show(10)
 
-    spark.catalog.dropTempView("us_origin_airport_JFK_tmp_view")
-    spark.catalog.dropGlobalTempView("us_origin_airport_SFO_global_tmp_view")
+    spark.sql("SELECT * FROM global_temp.us_origin_airport_SFO_global_tmp_view").show(10)
+    spark.sql("SELECT * FROM us_origin_airport_JFK_tmp_view").show(10)
+
+//    spark.catalog.dropTempView("us_origin_airport_JFK_tmp_view")
+//    spark.catalog.dropGlobalTempView("us_origin_airport_SFO_global_tmp_view")
 
     }
 }
